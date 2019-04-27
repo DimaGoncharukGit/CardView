@@ -26,8 +26,8 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
 
-        //initRecyclerView();
-        //initPresenter();
+        initRecyclerView();
+        initPresenter();
 
         setInitialData();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
