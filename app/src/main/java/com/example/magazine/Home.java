@@ -1,12 +1,13 @@
 package com.example.magazine;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +17,17 @@ import java.util.List;
 public class Home extends AppCompatActivity {
 
     List<Product> products = new ArrayList<>();
-
+    private RecyclerView recyclerView;
+    private Adapter adapter;
+    private MainPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+
+        //initRecyclerView();
+        //initPresenter();
 
         setInitialData();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
@@ -30,6 +37,26 @@ public class Home extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    private void initPresenter() {
+        presenter = new MainPresenter();
+        presenter.setView((MainPresenter.MainView) this);
+        presenter.viewOnCreate();
+    }
+
+    private void initRecyclerView() {
+        recyclerView = findViewById(R.id.list);
+
+        adapter = new Adapter(getApplicationContext());
+        adapter.setOnItemClickListener(new OnClickListener.OnItemClickLisneter() {
+            @Override
+            public void onClick(View view, long id) {
+                presenter.itemClicked(id);
+            }
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,7 +116,17 @@ public class Home extends AppCompatActivity {
     public void onBackPressed() {
         //super.onBackPressed();
     }
+
+
+
+
 }
+
+
+
+
+
+
 
 
 
