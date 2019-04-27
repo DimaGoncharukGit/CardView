@@ -13,10 +13,14 @@ import java.util.List;
 
 class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+    private OnClickListener onClickListener;
+
     private LayoutInflater inflater;
     private List<Product> products;
 
+
     Adapter(Context context, List<Product> products) {
+        this.onClickListener = onClickListener;
         this.products = products;
         this.inflater = LayoutInflater.from(context);
     }
@@ -51,5 +55,9 @@ class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             nameView = view.findViewById(R.id.title);
 
         }
+    }
+
+    public interface OnClickListener {
+        void onCardClick(Product product);
     }
 }
